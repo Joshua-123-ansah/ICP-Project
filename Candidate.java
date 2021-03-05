@@ -1,15 +1,48 @@
 import java.util.Objects;
+
+/*
+*
+* Class: Voter
+* Access Modifier: Public
+* Inheritance  Voter Class
+* 
+*/
 public class Candidate extends Voter {
+	
+	/*
+	 * Instance Variables
+	 * @voterrecieved
+	 * @politicalparty
+	 * @count
+	*/
 	private int voterrecieved;
 	private String politicalparty;
 	private int count;
 	
-	Candidate(String fullname,String dateofbirth,String nationality,char gender,int voterid,boolean vote,int voterrecieved,String politicalparty){
-		super(fullname,dateofbirth,nationality, gender,voterid,vote);
+	/*
+	 *  Constructor
+	 * @param fullname
+	 * @param dateofbirth
+	 * @param nationality
+	 * @param gender
+	 * @param voterid
+	 * @param voterrecieved
+	 * @param politicalparty
+	 * 
+	 */
+	Candidate(String fullname,String dateofbirth,String nationality,char gender,int voterid,int voterrecieved,String politicalparty){
+		super(fullname,dateofbirth,nationality, gender,voterid);
 		this.voterrecieved=voterrecieved;
 		this.politicalparty=politicalparty;
 	}
 	
+	/*
+	 * Mutator methods : 
+	 * setVoterRecieved  @param voterrecieved
+	 * setPoliticalParty       @param politicalparty
+	 * setCount   @param count
+	 
+	 */
 	public void setVoterRecieved(int voterrecieved) {
 		this.voterrecieved=voterrecieved;
 	}
@@ -17,31 +50,36 @@ public class Candidate extends Voter {
 	public void setPoliticalParty(String politicalparty) {
 		this.politicalparty=politicalparty;
 	}
+	
 	public void setCount(int count) {
 		this.count = count;
 	
 	}
 	
+	/*
+	 * Accessor Method 
+	 * getCount  @return Count
+	 * getVoterRecieved       @return voterRecieved
+	 * getPoliticalParty()   @return politicalParty()
+	
+	 * 
+	 */
+	public int getCount() {
+		return count;
+	}
+
 	public int getVoterRecieved() {
 		return voterrecieved;
 	}
 	public String getPoliticalParty() {
 		return politicalparty;
 	}
-	public int getCount() {
-		return count;
-	}
 	
 	// Increase Vote method
 	public void increaseCount() {
 		count++;
 		}
-@Override
-	public String toString() {
-		return "Candidate voterrecieved=" + voterrecieved + "/n"+
-				" politicalparty=" + politicalparty;
-				
-	}
+
 	
 	
 	@Override
@@ -65,6 +103,14 @@ public class Candidate extends Voter {
 	
 
 
+@Override
+	public String toString() {
+		return "Candidate voterrecieved=" + voterrecieved + 
+				", politicalparty=" + politicalparty + 
+				", count=" + count
+				;
+	}
+
 @Override 
 //Hashcode method
 public int hashCode() {
@@ -73,5 +119,8 @@ public int hashCode() {
 	result = prime * result + Objects.hash(count, politicalparty, voterrecieved);
 	return result;
 }
-     
+
 }
+
+
+

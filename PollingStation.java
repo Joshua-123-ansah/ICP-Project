@@ -7,6 +7,7 @@ public class PollingStation {
     private String districtName;
     private int totalRegisteredVoter;
     private int totalVoteCastForPollingStation;
+    private int count;
     // The voter class contains nothing. Just created it
     private Voter voterRegister;
     HashMap register=new HashMap<Integer,Voter>();
@@ -95,7 +96,15 @@ public class PollingStation {
         return this.stationID;
     }
 
-    public void increaseVoteCast(){}
+    public void increaseVote(int votersID){
+        if(register.containsKey(votersID)){
+            if(((Voter) register.get(votersID)).hasVote())
+                count++;
+        }else{
+            System.out.println("Your ID is not in the register");
+        }
+        
+    }
 
 
     //I would have to get a Register
@@ -106,12 +115,17 @@ public class PollingStation {
     //Add Voter to Register 
 
     public String addVoter(Voter voter){
-        register.put(voter.getID(), voter);
+        register.put(voter.getVoterId(), voter);
         return "Voter Added";
     }
     //Remove Voter From Register 
     public String removeVoter(int voterId){
         register.remove(voterId);
         return "Voter removed";
+    }
+
+    //Report to district 
+    public void reportVotesReceived(District district){
+        district.getVotesfromDistrict(this.);
     }
 }
