@@ -1,47 +1,86 @@
 import java.util.Objects;
+
+/*
+*
+* Class: Voter
+* Access Modifier: Public
+* Inheritance  Voter Class
+* 
+*/
 public class Candidate extends Voter {
-	private int voterrecieved;
-	private String politicalparty;
-	private int count;
 	
-	Candidate(String fullname,String dateofbirth,String nationality,char gender,int voterid,boolean vote,int voterrecieved,String politicalparty){
-		super(fullname,dateofbirth,nationality, gender,voterid,vote);
-		this.voterrecieved=voterrecieved;
+	/*
+	 * Instance Variables
+	 * @voteReceived
+	 * @politicalparty
+	 * @count
+	*/
+	private int voteRecieved;
+	private String politicalparty;
+	
+	/*
+	 *  Constructor
+	 * @param fullname
+	 * @param dateofbirth
+	 * @param nationality
+	 * @param gender
+	 * @param voterid
+	 * @param voteReceived
+	 * @param politicalparty
+	 * 
+	 */
+	Candidate(String fullname,String dateofbirth,String nationality,char gender,int voterid,String politicalparty){
+		super(fullname,dateofbirth,nationality, gender,voterid);
 		this.politicalparty=politicalparty;
 	}
 	
-	public void setVoterRecieved(int voterrecieved) {
-		this.voterrecieved=voterrecieved;
+	/*
+	 * Mutator methods : 
+	 * setvoteReceived  @param voteReceived
+	 * setPoliticalParty       @param politicalparty
+	 * setCount   @param count
+	 */
+	public void setvoteReceived(int voteReceived) {
+		this.voteRecieved=voteReceived;
 	}
 	
 	public void setPoliticalParty(String politicalparty) {
 		this.politicalparty=politicalparty;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	
+	public void setCount(int voteReceived) {
+		this.voteRecieved = voteRecieved;
 	
 	}
 	
-	public int getVoterRecieved() {
-		return voterrecieved;
+	/*
+	 * Accessor Method 
+	 * getCount  @return Count
+	 * getvoteReceived       @return voteReceived
+	 * getPoliticalParty()   @return politicalParty()
+	
+	 * 
+	 */
+	public int getCount() {
+		return voteRecieved;
+	}
+
+	public int getvoteReceived() {
+		return voteRecieved;
 	}
 	public String getPoliticalParty() {
 		return politicalparty;
 	}
-	public int getCount() {
-		return count;
-	}
 	
 	// Increase Vote method
 	public void increaseCount() {
-		count++;
-		}
-@Override
-	public String toString() {
-		return "Candidate voterrecieved=" + voterrecieved + "/n"+
-				" politicalparty=" + politicalparty;
-				
+		voteRecieved++;
 	}
+
+	public void increaseCount(int votesReceived) {
+		voteRecieved += votesReceived;
+	}
+
 	
 	
 	@Override
@@ -58,20 +97,37 @@ public class Candidate extends Voter {
 		}
 		Candidate other = (Candidate) obj;
 		return count == other.count && Objects.equals(politicalparty, other.politicalparty)
-				&& voterrecieved == other.voterrecieved;
+				&& voteRecieved == other.voteRecieved;
 	}
 
 	
 	
 
 
+@Override
+	public String toString() {
+		return 	"CandidateName: "+getFullname()+"\n"+
+				"Candidate voteReceived=" + voteRecieved + "\n"+
+				"Politicalparty=" + politicalparty + "\n"
+				;
+	}
+
 @Override 
 //Hashcode method
 public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result + Objects.hash(count, politicalparty, voterrecieved);
+	result = prime * result + Objects.hash(politicalparty, voteRecieved);
 	return result;
 }
-     
+
+public static void main(String[] args) {
+	Candidate nana=new Candidate("Nana", "12/01/2002", "Ghana", 'M', 212121, "NPP");
+	Candidate mahama=new Candidate("Mahama", "12/01/2002", "Ghana", 'M', 2133321, "NDC");
+	System.out.println(nana.hashCode());
 }
+
+}
+
+
+

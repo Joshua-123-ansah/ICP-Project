@@ -1,4 +1,4 @@
-package MIDSEM;
+
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ public class NationalElectorialOffice {
 	
 	private Candidate winner;
 	public static HashMap<Integer, Voter> voterList = new HashMap<Integer, Voter>();	
-	private HashMap<Integer, Candidate> candidateList = new HashMap<Integer, Candidate>();
+	public static HashMap<Integer, Candidate> candidateList = new HashMap<Integer, Candidate>();
 	
 	
 
