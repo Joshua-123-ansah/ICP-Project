@@ -10,8 +10,8 @@ public class PollingStation {
     private int count;
     // The voter class contains nothing. Just created it
     private Voter voterRegister;
-    static HashMap register=new HashMap<Integer,Voter>();
-    static HashMap eachCandidateResult=new HashMap<String,Integer>();
+    static HashMap<Integer,Voter> register=new HashMap<Integer,Voter>();
+    HashMap<String,Integer> eachCandidateResult=new HashMap<String,Integer>();
 
     //private HashMap candidateList = new HashMap<Integer, Candidate>();
     
@@ -26,9 +26,11 @@ public class PollingStation {
 
     //Methods that stores in the HashMap candidates name and total vote
     public int candidateTotalVote(String candidatesName){
-        if(!eachCandidateResult.containsKey(candidatesName))
-            System.out.println("Candidates Name Is Not Found");
-        return (int) eachCandidateResult.get(candidatesName);
+        if(eachCandidateResult.containsKey(candidatesName))
+            return (Integer) eachCandidateResult.get(candidatesName);
+        System.out.println("Candidates Name Is Not Found");
+        return 0;
+       
     }
 
     //Take total vote of each candidate and put it inside the hashmap //change into
@@ -38,7 +40,7 @@ public class PollingStation {
 
     //Report to district
     public void reportCandidateResultToDistrict(District district){
-        district.
+        district = null;
     }
      
 

@@ -6,8 +6,8 @@ public class RegionalElectoralOffice {
     private String regionName;
     private int numberOfDistricts;
     private int votesReceived;
-    private HashMap listOfDistricts = new HashMap<Integer,District>();
-    private HashMap listOfCandidate = new HashMap<Integer, Candidate>();
+    private HashMap<Integer,District> listOfDistricts = new HashMap<Integer,District>();
+    private HashMap<Integer, Candidate> listOfCandidate = new HashMap<Integer, Candidate>();
     
     RegionalElectoralOffice(String regionName, int numberOfDistricts){
         this.regionName = regionName;
@@ -41,12 +41,16 @@ public class RegionalElectoralOffice {
     } 
 
     public void collateCandidateVotes(Candidate candidate){ 
-       listOfDistricts.forEach((key, value) -> candidate.increaseCount((District)value.collateResults(candidate)));
+       listOfDistricts.forEach((key, value) -> candidate.increaseCount(value.eachCandidateVoteAtDistrictLevel(candidate)));
     
     }
 
+    public int totalVoteCast() {
+		return 0;
+	}
+
     public static void main(String[] args) {
-       HashMap f = new HashMap<String, String>();
+       HashMap<String, String> f = new HashMap<String, String>();
 
         f.put("1", "one");
         f.put("21", "one2");
@@ -57,4 +61,6 @@ public class RegionalElectoralOffice {
 
     public void getVotesfromDistrict(int totalVotesReceived) {
     }
+
+	
 }

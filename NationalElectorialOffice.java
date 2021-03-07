@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import LAB3.Candidate;
-import LAB3.Voter;
+// import LAB3.Candidate;
+// import LAB3.Voter;
 
 public class NationalElectorialOffice {
 	
 	private Candidate winner;
+	private int totalVoteCast;
 	public static HashMap<Integer, Voter> voterList = new HashMap<Integer, Voter>();	
 	public static HashMap<Integer, Candidate> candidateList = new HashMap<Integer, Candidate>();
 	
@@ -39,12 +40,12 @@ public class NationalElectorialOffice {
 		throw new NullPointerException("There is no winner yet");
 	}
 	
-	public int getTotalVoteCast() {
-		return Voter.totalVoteCast;
+	public int getTotalVoteCast(RegionalElectoralOffice re) {
+		return re.totalVoteCast();
 	}
 	
 	public void setTotalVoteCast(int newtotalVoteCast) {
-	 Voter.totalVoteCast = newtotalVoteCast;
+		totalVoteCast = newtotalVoteCast;
 	}
 	
 	public boolean isWinner(Candidate candidate) {
@@ -64,19 +65,19 @@ public class NationalElectorialOffice {
 	
 	
 	public int collateCandidateResult(Candidate candidate) {
-		return candidate.getVoteAcculated();
+		return candidate.getvoteReceived();
 	}
 	
 	public void registerCandidate(Candidate candidate) {
 		if(!candidateList.containsValue(candidate)) {
-			candidateList.put(candidate.getID(), candidate);
+			candidateList.put(candidate.getVoterId() , candidate);
 		}
 	}
 	
 	
 	public static void addVoter(Voter voter) {
 		if(voter != null) {
-			voterList.put(voter.getVoterID(), voter);
+			voterList.put(voter.getVoterId(), voter);
 			return;
 		}
 		throw new IllegalStateException("The voter is not recognisable");
@@ -84,7 +85,7 @@ public class NationalElectorialOffice {
 	
 	public void removeVoter(Voter voter) {
 		if(voter != null) {
-			voterList.remove(voter.getVoterID());
+			voterList.remove(voter.getVoterId());
 			return;
 		}
 		throw new IllegalStateException("There is no such voter");
@@ -99,26 +100,8 @@ public class NationalElectorialOffice {
 	}
 	
 	private float getCandidateVotePercentage(Candidate candidate) {
-		return (candidate.getVoteAcculated()/ Voter.totalVoteCast)*100;
+		return (candidate.getvoteReceived()/ totalVoteCast)*100;
 	}
-	
-	
-	
-	
-	public static void main(String[] args) {
-		Voter t = new Voter("Eric", 18, 'm',"gh", "accra", 12345);
-		Voter t1 = new Voter("Gadzi", 18, 'm',"gh", "aka", 12);
-		
-		NationalElectorialOffice pk = new NationalElectorialOffice();
-		pk.addVoter(t);
-		pk.addVoter(t1);
-		System.out.println(pk.voterList);
-		
-		
-	}
-	
-	
-	
 	
 	/**
 	 * @return the candidateList
@@ -165,7 +148,19 @@ public class NationalElectorialOffice {
 	@Override
 	public String toString() {
 		return "NationalElectorialOffice [winner=" + winner  
-				+ ", TotalVoteCast=" + getTotalVoteCast() + "]"+ "TotalPercentageAttained= "+ getCandidateVotePercentage(winner);
+				+ ", TotalVoteCast=" + totalVoteCast + "]" + "TotalPercentageAttained= "
+				+ getCandidateVotePercentage(winner);
 	}
 
+	// public static void main(String[] args) {
+	// 	Voter t = new Voter("Eric", 18, 'm',"gh", "accra", 12345);
+	// 	Voter t1 = new Voter("Gadzi", 18, 'm',"gh", "aka", 12);
+		
+	// 	NationalElectorialOffice pk = new NationalElectorialOffice();
+	// 	pk.addVoter(t);
+	// 	pk.addVoter(t1);
+	// 	System.out.println(pk.voterList);
+		
+		
+	// }
 }

@@ -7,7 +7,7 @@ public class District {
     String region;
     int totalVotesReceived;
     int numberOfPollingStation;
-    private int count=0;
+    private int count;
     HashMap<Integer, Integer> pollVoteCollector = new HashMap<Integer, Integer>();
     HashMap<Integer,PollingStation> pollingStationsInfo=new HashMap<Integer,PollingStation>();
     HashMap<String, Integer> candidatesVoteAtDistrictLevel=new HashMap<String,Integer>();
@@ -25,23 +25,22 @@ public class District {
     }
 
     //Receive Polling Station Info
-    public void pollingStationInfo(PollingStation pollingstationinfo){
-        pollingStationsInfo.put(pollingstationinfo.getStationID(), pollingstationinfo);
+    public void pollingStationInfo(PollingStation pollingstation){
+        pollingStationsInfo.put(pollingstation.getStationID(), pollingstation);
     }
 
     //Get Vote of each condidate and add to get the total vote for each candidate in the district
     
-    public void eachCandidateVoteAtDistrictLevel(Candidate candidate){
+    public int eachCandidateVoteAtDistrictLevel(Candidate candidate){
     //#pollingStationsInfo.forEach((key,value)-> 
        // count=+(((PollingStation) value).candidateTotalVote(candidate.getFullname())));
-       int count = 0;
+       var count = 0;
        for (var i : pollingStationsInfo.keySet()) {
             count += ((PollingStation) pollingStationsInfo.get(i)).candidateTotalVote(candidate.getFullname());
-            System.out.println(count);
             candidatesVoteAtDistrictLevel.put(candidate.getFullname(), count);
        }
 
-       System.out.println(candidatesVoteAtDistrictLevel.get(candidate.getFullname()));
+      return candidatesVoteAtDistrictLevel.get(candidate.getFullname());
            
     }
     // Accessor Methods
@@ -147,6 +146,9 @@ public class District {
 		//System.out.println(v1.toString());
 		//System.out.println(v1.equals(v2));
 		Candidate mahama=new Candidate("Mahama", "12/01/2002", "Ghana", 'M', 111111, "NDC");
+        PollingStation pp1=new PollingStation("Ayawaso", 1223, "Ayawaso Dis", 300);
+        
+        dis.pollingStationInfo(pp1);
 
 		v1.Vote(nana);
 		v2.Vote(mahama);
@@ -156,9 +158,21 @@ public class District {
 		v6.Vote(nana);
 		v7.Vote(nana);
 		v8.Vote(nana);
+
+        PollingStation.register.put(v1.getVoterId(), v1);
+        PollingStation.register.put(v2.getVoterId(),v2);
+        PollingStation.register.put(v3.getVoterId(),v3);
+        PollingStation.register.put(v4.getVoterId(),v4);
+        PollingStation.register.put(v5.getVoterId(),v5);
+        PollingStation.register.put(v6.getVoterId(),v6);
+        PollingStation.register.put(v7.getVoterId(),v7);
+        PollingStation.register.put(v8.getVoterId(),v8);
 		//System.out.println(v1.hasVote());
 		System.out.println(nana.getvoteReceived());
 		System.out.println(mahama.getvoteReceived());
+
+        pp1.into(nana);
+        pp1.into(mahama);
 
 
         dis.eachCandidateVoteAtDistrictLevel(nana);

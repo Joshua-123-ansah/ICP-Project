@@ -48,11 +48,6 @@ public class Candidate extends Voter {
 		this.politicalparty=politicalparty;
 	}
 	
-	public void setCount(int voteReceived) {
-		this.voteRecieved = voteRecieved;
-	
-	}
-	
 	/*
 	 * Accessor Method 
 	 * getCount  @return Count
@@ -96,7 +91,7 @@ public class Candidate extends Voter {
 			return false;
 		}
 		Candidate other = (Candidate) obj;
-		return count == other.count && Objects.equals(politicalparty, other.politicalparty)
+		return voteRecieved == other.voteRecieved && Objects.equals(politicalparty, other.politicalparty)
 				&& voteRecieved == other.voteRecieved;
 	}
 
@@ -125,6 +120,7 @@ public static void main(String[] args) {
 	Candidate nana=new Candidate("Nana", "12/01/2002", "Ghana", 'M', 212121, "NPP");
 	Candidate mahama=new Candidate("Mahama", "12/01/2002", "Ghana", 'M', 2133321, "NDC");
 	System.out.println(nana.hashCode());
+	System.out.println(mahama.hasVote());
 }
 
 }
