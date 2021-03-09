@@ -1,194 +1,115 @@
+package ICP_Final_Project;
+
 import java.util.HashMap;
 
-public class PollingStation {
+public class PollingStation extends Office implements Collatable {
+	
+	private String districtName;
+	 HashMap<Integer,Voter> register=new HashMap<Integer,Voter>();
+	
+	
+	
+	public PollingStation(String officeName, int officeID, String region, String districtName) {
+		super(officeName, officeID, region);
+		this.districtName = districtName;
+	
+	}
 
-    private String stationName;
-    private int stationID;
-    private String districtName;
-    private int totalRegisteredVoter;
-    private int totalVoteCastForPollingStation;
-    private int count;
-    // The voter class contains nothing. Just created it
-    private Voter voterRegister;
-    static HashMap<Integer,Voter> register=new HashMap<Integer,Voter>();
-    HashMap<String,Integer> eachCandidateResult=new HashMap<String,Integer>();
-
-    //private HashMap candidateList = new HashMap<Integer, Candidate>();
-    
-    //Constructor 
-    PollingStation(){} //Defualt Constructor
-    PollingStation(String stationName,int stationID,String districtName,int totalRegisteredVoter){ //Overloaded Constructor
-        this.stationName=stationName;
-        this.stationID=stationID;
-        this.districtName=districtName;
-        this.totalRegisteredVoter=totalRegisteredVoter;
+	public int eachCandidateVoteAtThisOfficeLevel(Candidate candidate) { 
+	     voteResults.put(candidate, candidate.getVoteReceived());
+	     return candidate.getVoteReceived();
+	}
+	
+	
+	public HashMap<Candidate, Integer> collatedResults(){
+		return voteResults;
+	}
+	
+	
+	public void reportCandidateResultToDistrict(DistrictOffice district){
+        district.receivedCollatedResults(this);
     }
-
-    //Methods that stores in the HashMap candidates name and total vote
-    public int candidateTotalVote(String candidatesName){
-        if(eachCandidateResult.containsKey(candidatesName))
-            return (Integer) eachCandidateResult.get(candidatesName);
-        System.out.println("Candidates Name Is Not Found");
-        return 0;
-       
-    }
-
-    //Take total vote of each candidate and put it inside the hashmap //change into
-    public void into(Candidate candidate){
-        eachCandidateResult.put(candidate.getFullname(), candidate.getvoteReceived());
-    }
-
-    //Report to district
-    public void reportCandidateResultToDistrict(District district){
-        district = null;
-    }
-     
-
- 
-
-    // Getters
-    public String getStationName() {
-        return stationName;
-    }
-
-    public int getStationID() {
-        return stationID;
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public int getTotalRegisteredVoter() {
-           return totalRegisteredVoter;
-    }
-
-    public Voter getVoterRegister() {
-        return voterRegister;
-    }
-
-    // S etters
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
-    }
-
-    public void setStationID(int stationID) {
-        this.stationID = stationID;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-    public void setTotalRegisteredVoter(int totalRegisteredVoter) {
-        this.totalRegisteredVoter = totalRegisteredVoter;
-    }
-
-    public void setVoterRegister(Voter voterRegister) {
-        this.voterRegister = voterRegister;
-    }
-
-    // public int getCandidateVote(Candidate candidate){
-    //     return candidateList.get(candidate.getVoterId()).getTotalVotesReceived();
-    // }
-
-    //Auxiliary Methods 
-    @Override
-    public String toString(){
-        return "PollingStationName: "+getStationName()+"\n"+"StationID: "+getStationID()+"\n"+"DistrictName: "+getDistrictName()+"\n"+
-        "Total Registered Voters In The District: "+getTotalRegisteredVoter();
-    }
-
-    @Override
-    public boolean equals(Object anObject){
-        if(this==anObject){
-            return true;
-        }
-        if(anObject instanceof PollingStation){
-            PollingStation station=(PollingStation) anObject;
-            if(this.stationName.equals(station.stationName)){
-                if(this.stationID==station.stationID){
-                    if(this.districtName.equals(station.districtName)){
-                        if(this.totalRegisteredVoter==station.totalRegisteredVoter){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode(){
-        return this.stationID;
-    }
-
-    public void increaseVote(int votersID){
-        if(register.containsKey(votersID)){
-            if(((Voter) register.get(votersID)).hasVote())
-                count++;
-        }else{
-            System.out.println("Your ID is not in the register");
-        }
-        
-    }
-
-    public int totalVoteCast(){
-        return count;
-    }
-
-    //I would have to get a Register
-    //Get Voter From Register 
-    public Voter getVoter(int voterId){
-        if(!register.containsKey(voterId))
-            System.out.println("Incorrect Voter ID");
-        return (Voter) register.get(voterId); 
-    }
-    //Add Voter to Register 
-
-    public boolean addVoter(Voter voter){
-        if(register.containsKey(voter.getVoterId()))
+	
+	
+	public boolean registerVoter(Voter voter){
+        if(register.containsKey(voter.getVoterID()))
             return false;
-        register.put(voter.getVoterId(), voter);
+        register.put(voter.getVoterID(), voter);
         return true;
     }
-    //Remove Voter From Register 
-    public boolean removeVoter(int voterId){
-        if(register.containsKey(voterId)){
-            register.remove(voterId);
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
+	
+	
+	
+	 public boolean removeVoter(int voterId){
+	        if(register.containsKey(voterId)){
+	            register.remove(voterId);
+	            return true;
+	        }else
+	            return false;
+	        }
+	 
+	
+	/**
+	 * @return the districtName
+	 */
+	public String getDistrictName() {
+		return districtName;
+	}
 
-    //Report to district 
-    public void reportVoteCast(District district){
-        district.getVoteFromPollingStation(this.totalVoteCast());
-    }
+	/**
+	 * @param districtName the districtName to set
+	 */
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
 
-    public static void main(String[] args) {
-        PollingStation pp1=new PollingStation("Ayawaso", 1223, "Ayawaso Dis", 300);
-        PollingStation pp2=new PollingStation("Dodowu", 3423, "Ay Dis", 300);
-        //System.out.println(pp1.toString());
-        //System.out.println(pp1.equals(pp2));
-        //System.out.println(pp1.hashCode());
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((districtName == null) ? 0 : districtName.hashCode());
+		return result;
+	}
 
-        Voter v1=new Voter("Joshua", "04/01/2002", "Ghanaian", 'M', 71392023);
-		Voter v2=new Voter("David", "04/01/2002", "Nigerian", 'M',57392023);
-        Voter v3=new Voter("Gadzi", "04/01/2002", "Nigerian", 'M',57392053);
-        
-        Candidate nana=new Candidate("Nana", "12/01/2002", "Ghana", 'M', 212121, "NPP");
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PollingStation other = (PollingStation) obj;
+		if (districtName == null) {
+			if (other.districtName != null)
+				return false;
+		} else if (!districtName.equals(other.districtName))
+			return false;
+		 else if(this.getOfficeID() != other.getOfficeID())
+			 if(!this.getOfficeName().equals(other))
+				 return false;
+		return true;
+	}
 
-        register.put(v1.getVoterId(),v1);
-        register.put(v2.getVoterId(),v2);
+	@Override
+	public String toString() {
+		return "PollingStation [districtName=" + districtName + super.toString()+"]";
+	}
 
-        v1.Vote(nana);
-        pp1.increaseVote(71392023);
-        
-        // System.out.println(pp1.getVoter(71392023));
-        System.out.println(pp1.removeVoter(71392023));
-    }
+	@Override
+	public HashMap<Candidate, Integer> collateResults() {
+		// TODO Auto-generated method stub
+		return voteResults;
+	}
+
+	public boolean isRegistered(Voter voter) {
+		// TODO Auto-generated method stub
+		return register.containsKey(voter);
+	}
+	
+	
+	
+	
+
+	
 }

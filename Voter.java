@@ -1,216 +1,180 @@
-import java.util.Objects;
-
-/*
- *
- * Class: Voter
- * Access Modifier: Public
- * 
- */
+package ICP_Final_Project;
 
 public class Voter {
-	
-	/*
-	 * Instance Variables
-	 * @fullname
-	 * @dateofbirth
-	 * @nationality
-	 * @gender
-	 * @voterid
-	 * @vote
-	 */
-	private String fullname;
-	private String dateofbirth;
+	private String fullName;
+	private String dateOfBirth;
 	private String nationality;
 	private char gender;
-	private int voterid;
-	protected boolean vote;
-	
-	/*
-	 *  Constructor
-	 * @param fullname
-	 * @param dateofbirth
+	private int voterID;
+	private boolean hasVoted;
+	/**
+	 * @param fullName
+	 * @param dateOfBirth
 	 * @param nationality
 	 * @param gender
-	 * @param voterid
-	 * 
+	 * @param voterID
 	 */
-	Voter(String fullname,String dateofbirth,String nationality,char gender,int voterid){
-		this.fullname=fullname;
-		this.dateofbirth=dateofbirth;
-		this.nationality=nationality;
-		this.gender=gender;
-		this.voterid=voterid;	
+	public Voter(String fullName, String dateOfBirth, String nationality, char gender, int voterID) {
+		super();
+		this.fullName = fullName;
+		this.dateOfBirth = dateOfBirth;
+		this.nationality = nationality;
+		this.gender = gender;
+		this.voterID = voterID;
+		hasVoted = false;
+	}
+	
+	/**
+	 * 
+	 * @param candidate
+	 */
+	public void Vote(Candidate candidate, PollingStation pS) {
+		 //f(pS.isRegistered(this)) {
+		   if(hasVoted)
+		    throw new IllegalStateException(" You have voted already!");
+		   pS.increaseTotalVoteCast(); 		   
+		   candidate.increaseCount();
+		   hasVoted=true;
+		 //}
+		 //else throw new IllegalStateException("You are not registered");
+		}
+	
+	
+	@Override
+	public String toString() {
+		return "Voter [fullName=" + fullName + ", dateOfBirth=" + dateOfBirth + ", nationality=" + nationality
+				+ ", gender=" + gender + ", voterID=" + voterID + ", hasVoted=" + hasVoted + "]";
 	}
 
 
-	
-	/*
-	 * Accessor Method 
-	 * getFullname  @return fullname
-	 * getDOB       @return dateofbirth
-	 * getNationality   @return nationality
-	 * getGender       @return gender
-	 * getVoterId      @return voterid
-	 * 
-	 */
-	
-	public String getFullname() {
-		return fullname;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+		result = prime * result + gender;
+		result = prime * result + (hasVoted ? 1231 : 1237);
+		result = prime * result + ((nationality == null) ? 0 : nationality.hashCode());
+		result = prime * result + voterID;
+		return result;
 	}
-	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Voter other = (Voter) obj;
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
+				return false;
+		} else if (!dateOfBirth.equals(other.dateOfBirth))
+			return false;
+		if (fullName == null) {
+			if (other.fullName != null)
+				return false;
+		} else if (!fullName.equals(other.fullName))
+			return false;
+		if (gender != other.gender)
+			return false;
+		if (hasVoted != other.hasVoted)
+			return false;
+		if (nationality == null) {
+			if (other.nationality != null)
+				return false;
+		} else if (!nationality.equals(other.nationality))
+			return false;
+		if (voterID != other.voterID)
+			return false;
+		return true;
+	}
+
+
+
+
+	/**
+	 * @return the fullName
+	 */
+	public String getFullName() {
+		return fullName;
+	}
+	/**
+	 * @param fullName the fullName to set
+	 */
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	/**
+	 * @return the dateOfBirth
+	 */
 	public String getDateOfBirth() {
-		return dateofbirth;
+		return dateOfBirth;
 	}
-	
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	/**
+	 * @return the nationality
+	 */
 	public String getNationality() {
 		return nationality;
 	}
-	
+	/**
+	 * @param nationality the nationality to set
+	 */
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	/**
+	 * @return the gender
+	 */
 	public char getGender() {
 		return gender;
 	}
-	
-	public int getVoterId() {
-		return voterid;
-	}
-	
-
-	/*
-	 * Mutator methods : 
-	 * setFullname  @param fullname
-	 * setDOB       @param dateofbirth
-	 * setNationality   @param nationality
-	 * setGender      @param gender
-	 * setVoterId      @param voterid)
+	/**
+	 * @param gender the gender to set
 	 */
-	public void setFullname(String fullname) {
-		this.fullname=fullname;
-	}
-	public void setDOB(String dateofbirth) {
-		this.dateofbirth=dateofbirth;
-	}
-	
-	public void setNationality(String nationality) {
-		this.nationality=nationality;
-	}
-	
 	public void setGender(char gender) {
-		this.gender=gender;
+		this.gender = gender;
 	}
-	
-	public void setVoterId(int voterid) {
-		this.voterid=voterid;
-	}
-	
-	
-	/*
-	 * setVote @param vote
-	 * getVote return vote
+	/**
+	 * @return the voterID
 	 */
-	public void setVote(boolean vote) {
-		this.vote=vote; 
+	public int getVoterID() {
+		return voterID;
+	}
+	/**
+	 * @param voterID the voterID to set
+	 */
+	public void setVoterID(int voterID) {
+		this.voterID = voterID;
+	}
+	/**
+	 * @return the hasVoted
+	 */
+	public boolean isHasVoted() {
+		return hasVoted;
+	}
+	/**
+	 * @param hasVoted the hasVoted to set
+	 */
+	public void setHasVoted(boolean hasVoted) {
+		this.hasVoted = hasVoted;
 	}
 	
-	public boolean getVote() {
-		return vote;
-	}
 	
 	
 	
 	
-	/* toString method
-    *
-    * @return dob,nationality,gender,voterid
-    */
-   @Override
-   public String toString() {
-       return "Voter Details \n " +
-               "fullname :'" + getFullname() + "\n"+
-               " DateOfBirth :'" + getDateOfBirth() + "\n" +
-               "nationality :" + getNationality() + "\n" +
-               " gender: " + getGender() + "\n"+
-               " voterid: " + getVoterId();
-               
-               }
-
-   /*
-    * equals method
-    * @param obj
-    * @return
-    */
-   @Override
-   public boolean equals(Object obj) {
-       if (this == obj) return true;
-       if (!(obj instanceof Voter)) return false;
-       Voter voter = (Voter) obj;
-       return getGender() == voter.getGender() && Objects.equals(getFullname(), voter.getFullname()) && Objects.equals(getNationality(), voter.getNationality());
-   }
-
-   /*
-    * hashcode
-    * @return
-    */
-   @Override
-   public int hashCode() {
-       return Objects.hash(getFullname(), getNationality(), getGender());
-   }
-   
-   
-
 	
 	
-	// Has vote method
-  public boolean hasVote() {
-	return vote;
-  }
-   
-  
-  /*Vote method
-   * @param vote
-   * */
-   public void Vote(Candidate candidate) {
-	   if(hasVote())
-	    throw new IllegalStateException(" You have voted already!");
-	   //NationalElectorialOffice.candidateList.get(candidate.getVoterId()).increaseCount();
-	   candidate.increaseCount();
-	   vote=true;
-	}
 
-
-	public static void main(String[] args) {
-		Voter v1=new Voter("Joshua", "04/01/2002", "Ghanaian", 'M', 12345);
-		Voter v2=new Voter("David", "04/01/2002", "Nigerian", 'M',12347);
-		Voter v3=new Voter("Gadzi", "04/01/2002", "Ghanaian", 'M', 12343);
-		Voter v4=new Voter("Ayeyi", "04/01/2002", "Nigerian", 'M',12349);
-		Voter v5=new Voter("Clara", "04/01/2002", "Ghanaian", 'M', 12340);
-		Voter v6=new Voter("MyBaby", "04/01/2002", "Nigerian", 'M',12342);
-		Voter v7=new Voter("I love You", "04/01/2002", "Ghanaian", 'M',12341);
-		Voter v8=new Voter("So Much Jesus", "04/01/2002", "Nigerian", 'M',57392023);
-		//System.out.println(v1.toString());
-		//System.out.println(v1.equals(v2));
-		Candidate nana=new Candidate("Nana", "12/01/2002", "Ghana", 'M', 212121, "NPP");
-		Candidate mahama=new Candidate("Mahama", "12/01/2002", "Ghana", 'M', 111111, "NDC");
-
-		v1.Vote(nana);
-		v2.Vote(mahama);
-		v3.Vote(mahama);
-		v4.Vote(nana);
-		v5.Vote(nana);
-		v6.Vote(nana);
-		v7.Vote(nana);
-		v8.Vote(nana);
-		//System.out.println(v1.hasVote());
-		System.out.println(nana.getvoteReceived());
-		System.out.println(mahama.getvoteReceived());
-		
-		// v1.Vote(nana);
-		// System.out.println(v1.hasVote());
-		// System.out.println(nana.getvoteReceived());
-
-	}
-	      
 }
-
-
-
-
