@@ -1,129 +1,104 @@
-import java.util.Objects;
+package ICP_Final_Project;
 
-/*
-*
-* Class: Voter
-* Access Modifier: Public
-* Inheritance  Voter Class
-* 
-*/
 public class Candidate extends Voter {
+	private int votesReceived;
+	private String partyName;
 	
-	/*
-	 * Instance Variables
-	 * @voteReceived
-	 * @politicalparty
-	 * @count
-	*/
-	private int voteRecieved;
-	private String politicalparty;
-	
-	/*
-	 *  Constructor
-	 * @param fullname
-	 * @param dateofbirth
+	/**
+	 * 
+	 * @param fullName
+	 * @param dateOfBirth
 	 * @param nationality
 	 * @param gender
-	 * @param voterid
-	 * @param voteReceived
-	 * @param politicalparty
-	 * 
+	 * @param voterID
+	 * @param partyName
 	 */
-	Candidate(String fullname,String dateofbirth,String nationality,char gender,int voterid,String politicalparty){
-		super(fullname,dateofbirth,nationality, gender,voterid);
-		this.politicalparty=politicalparty;
-	}
 	
-	/*
-	 * Mutator methods : 
-	 * setvoteReceived  @param voteReceived
-	 * setPoliticalParty       @param politicalparty
-	 * setCount   @param count
-	 */
-	public void setvoteReceived(int voteReceived) {
-		this.voteRecieved=voteReceived;
-	}
-	
-	public void setPoliticalParty(String politicalparty) {
-		this.politicalparty=politicalparty;
-	}
-	
-	/*
-	 * Accessor Method 
-	 * getCount  @return Count
-	 * getvoteReceived       @return voteReceived
-	 * getPoliticalParty()   @return politicalParty()
-	
-	 * 
-	 */
-	public int getCount() {
-		return voteRecieved;
+	public Candidate(String fullName, String dateOfBirth, String nationality, char gender, int voterID, String partyName) {
+		super(fullName,dateOfBirth,nationality, gender,voterID);
+		this.partyName = partyName;
+		votesReceived = 0;
 	}
 
-	public int getvoteReceived() {
-		return voteRecieved;
-	}
-	public String getPoliticalParty() {
-		return politicalparty;
-	}
 	
-	// Increase Vote method
 	public void increaseCount() {
-		voteRecieved++;
+		votesReceived++;
 	}
-
-	public void increaseCount(int votesReceived) {
-		voteRecieved += votesReceived;
+	
+	public void increaseCountByVote(int votesReceived) {
+		votesReceived += votesReceived;
 	}
-
 	
 	
 	@Override
-	//Equals method
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (!(obj instanceof Candidate)) {
-			return false;
-		}
-		Candidate other = (Candidate) obj;
-		return voteRecieved == other.voteRecieved && Objects.equals(politicalparty, other.politicalparty)
-				&& voteRecieved == other.voteRecieved;
-	}
-
-	
-	
-
-
-@Override
 	public String toString() {
-		return 	"CandidateName: "+getFullname()+"\n"+
-				"Candidate voteReceived=" + voteRecieved + "\n"+
-				"Politicalparty=" + politicalparty + "\n"
-				;
+		return "Candidate"+ super.toString()+" [votesReceived=" + votesReceived + ", partyName=" + partyName + "]";
 	}
 
-@Override 
-//Hashcode method
-public int hashCode() {
-	final int prime = 31;
-	int result = super.hashCode();
-	result = prime * result + Objects.hash(politicalparty, voteRecieved);
-	return result;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((partyName == null) ? 0 : partyName.hashCode());
+		result = prime * result + votesReceived;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Candidate other = (Candidate) obj;
+		if (partyName == null) {
+			if (other.partyName != null)
+				return false;
+		} else if (!partyName.equals(other.partyName))
+			return false;
+		if (votesReceived != other.votesReceived)
+			return false;
+		return true;
+	}
+
+
+	/**
+	 * @return the hasVoteReceived
+	 */
+	public int getVoteReceived() {
+		return votesReceived;
+	}
+
+
+
+	/**
+	 * @param hasVoteReceived the hasVoteReceived to set
+	 */
+	public void setHasVoteReceived(int hasVoteReceived) {
+		this.votesReceived = hasVoteReceived;
+	}
+
+
+
+	/**
+	 * @return the partyName
+	 */
+	public String getPartyName() {
+		return partyName;
+	}
+
+
+
+	/**
+	 * @param partyName the partyName to set
+	 */
+	public void setPartyName(String partyName) {
+		this.partyName = partyName;
+	}
+	
+	
 }
-
-public static void main(String[] args) {
-	Candidate nana=new Candidate("Nana", "12/01/2002", "Ghana", 'M', 212121, "NPP");
-	Candidate mahama=new Candidate("Mahama", "12/01/2002", "Ghana", 'M', 2133321, "NDC");
-	System.out.println(nana.hashCode());
-	System.out.println(mahama.hasVote());
-}
-
-}
-
-
-
